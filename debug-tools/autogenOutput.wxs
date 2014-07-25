@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="TARGETDIR">
+            <Directory Id="dir39B22699688E51DCD8DCBB99A47E835B" Name="Debug" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir39B22699688E51DCD8DCBB99A47E835B">
+            <Component Id="cmpCEEEE5C540A1068282BD12BA717C78E9" Guid="PUT-GUID-HERE">
+                <Class Id="{3C891984-93C5-4F55-AF62-5237D3E472FD}" Context="InprocServer32" Description="WiimoteAddin.Connect" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="WiimoteAddin.Connect" Description="WiimoteAddin.Connect" />
+                </Class>
+                <File Id="fil366ACC091AF1A9EBDDCD80CC3DED4547" KeyPath="yes" Source="SourceDir\Debug\WiimoteAddin.dll" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32\1.0.0.0" Name="Class" Value="WiimoteAddin.Connect" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32\1.0.0.0" Name="Assembly" Value="WiimoteAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32\1.0.0.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32\1.0.0.0" Name="CodeBase" Value="file:///[#fil366ACC091AF1A9EBDDCD80CC3DED4547]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32" Name="Class" Value="WiimoteAddin.Connect" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32" Name="Assembly" Value="WiimoteAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{3C891984-93C5-4F55-AF62-5237D3E472FD}\InprocServer32" Name="CodeBase" Value="file:///[#fil366ACC091AF1A9EBDDCD80CC3DED4547]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF1-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="Class" Value="Extensibility.ext_ConnectMode" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF1-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="Assembly" Value="WiimoteAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF1-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF1-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="CodeBase" Value="file:///[#fil366ACC091AF1A9EBDDCD80CC3DED4547]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF2-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="Class" Value="Extensibility.ext_DisconnectMode" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF2-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="Assembly" Value="WiimoteAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF2-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{289E9AF2-4973-11D1-AE81-00A0C90F26F4}\1.0.0.0" Name="CodeBase" Value="file:///[#fil366ACC091AF1A9EBDDCD80CC3DED4547]" Type="string" Action="write" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

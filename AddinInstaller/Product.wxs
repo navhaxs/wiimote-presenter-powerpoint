@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="AppRootDirectory">
+      <Component Id="MyComponent" Guid="099C9652-DDBA-49ED-9D5E-F1E531EF67E2" DiskId="1">
+        <CreateFolder/>
+        <RemoveFolder Id="RemoveAppRootDirectory" On="uninstall" />
+
+        <RegistryKey Key="Software\Microsoft\Office\PowerPoint\Addins\WiimoteAddin" Root="HKLM" Action="createAndRemoveOnUninstall">
+          <RegistryValue Name="Description" Value="Wiimote Presenter. Uninstall this Add-In through Add\Remove Programs." Type="string" />
+          <RegistryValue Name="FriendlyName" Value="Wiimote PP Presenter" Type="string" />
+          <!-- Startup mode "3" is load on startup -->
+          <RegistryValue Name="LoadBehavior" Value="3" Type="integer" />
+        </RegistryKey>
+        <!-- TODO: Add DLL files (and WiX heat wxs output?) -->
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

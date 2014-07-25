@@ -212,3 +212,8 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+*.dll
+*.ppt
+*.pptx
+sample content/
