@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="*" Name="Wiimote Presenter for PowerPoint" Language="1033" Version="1.0.0.0" Manufacturer="navhaxs" UpgradeCode="425cd9fd-519b-424c-9b3c-853e5a52d1a7">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
