@@ -23,17 +23,17 @@ namespace WiimoteAddin
             }
         }
 
-        public string ActionButtonText
+        public string labelStatus_Text
         {
             get
             {
                 if (App.NoWiimotesActive())
                 {
-                    return "Connect Wiimote";
+                    return "Wiimote not connected";
                 }
                 else
                 {
-                    return "Disconnect Wiimote";
+                    return "Wiimote is connected";
                 }
             }
         }
@@ -72,6 +72,7 @@ namespace WiimoteAddin
         {
             OnPropertyChanged("ShowIfWiimotesActive");
             OnPropertyChanged("ShowIfNoWiimotesActive");
+            OnPropertyChanged("labelStatus_Text");
         }
 
         #region "MVVM PropertyChanged code"

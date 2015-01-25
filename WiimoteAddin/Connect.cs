@@ -52,6 +52,7 @@ namespace WiimoteAddin
         void Extensibility.IDTExtensibility2.OnStartupComplete(ref Array custom)
         {
             //throw new NotImplementedException();
+            Application.EnableVisualStyles();
         }
 
         string Microsoft.Office.Core.IRibbonExtensibility.GetCustomUI(string RibbonID)
@@ -79,25 +80,21 @@ namespace WiimoteAddin
            
         //}
 
-        AppWindow wnd;
 
         public void showWiimoteSetup(IRibbonControl control = null, bool wait = false)
         {
             // show if already created, otherwise if not created make new one
             
             // make static somehow
-            if (wnd != null)
+            if (App.wnd != null)
             {
-                wnd.Show();
-                wnd.Focus();
+                App.wnd.Show();
+                App.wnd.Focus();
             }
             else
             {
-                WiimoteAddin.MainScreen content = new WiimoteAddin.MainScreen();
-                content.DataContext = App.MainScreenData;
-
-                wnd = new AppWindow(content);
-                wnd.Show(); 
+                App.wnd = new AppWindow();
+                App.wnd.Show(); 
             }
             
         }

@@ -13,7 +13,6 @@ namespace WiimoteAddin
         
         public void UpdateWiimoteChanged(object sender, WiimoteLib.WiimoteChangedEventArgs args)
         {
-            Debug.Print("Received wm update");
             
             WiimoteState ws = args.WiimoteState;
 

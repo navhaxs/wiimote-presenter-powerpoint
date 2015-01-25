@@ -17,11 +17,25 @@ namespace WiimoteAddin
     /// <summary>
     /// Interaction logic for Mapping.xaml
     /// </summary>
-    public partial class MappingScreen : UserControl
+    public partial class MappingScreen : Page
     {
         public MappingScreen()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+        	 {
+	        this.NavigationService.GoBack();
+	 }
+        }
+
+        private void newevent(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Hai");
+
         }
     }
 }

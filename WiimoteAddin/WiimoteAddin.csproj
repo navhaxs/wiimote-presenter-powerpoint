@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <ExpressionBlendVersion>12.0.41002.1</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +39,19 @@
     <Reference Include="InTheHand.Net.Personal">
       <HintPath>..\packages\32feet.NET.3.5.0.0\lib\net\InTheHand.Net.Personal.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Drawing" />
+    <Reference Include="NetOffice">
+      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\NetOffice.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="OfficeApi">
+      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\OfficeApi.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PowerPointApi">
+      <HintPath>..\packages\NetOffice.PowerPoint.1.7.2.0\lib\net40\PowerPointApi.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -46,6 +61,10 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
+    <Reference Include="VBIDEApi">
+      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\VBIDEApi.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="WiimoteLib">
       <HintPath>..\packages\WiimoteLib.1.7\lib\WiimoteLib.dll</HintPath>
     </Reference>
@@ -61,6 +80,9 @@
       <DependentUpon>AppWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Connect.cs" />
+    <Compile Include="Frame.xaml.cs">
+      <DependentUpon>Frame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainScreen.xaml.cs">
       <DependentUpon>MainScreen.xaml</DependentUpon>
     </Compile>
@@ -143,10 +165,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\ribbonButtonLogo.png" />
-    <None Include="WiimoteLib_Extras\docs\WiimoteLib.chm" />
-    <None Include="WiimoteLib_Extras\samples.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Frame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\AppTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,9 +189,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WiimoteLib_Extras\docs\copyright.txt" />
-    <Content Include="WiimoteLib_Extras\docs\license.txt" />
-    <Content Include="WiimoteLib_Readme.txt" />
+    <Resource Include="Resources\bg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

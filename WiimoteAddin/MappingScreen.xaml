@@ -1,23 +1,53 @@
-﻿<UserControl x:Class="WiimoteAddin.MappingScreen"
+﻿<Page x:Class="WiimoteAddin.MappingScreen"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="354" d:DesignWidth="542" Background="Black">
-    <UserControl.Resources>
-        <ResourceDictionary Source="Theme/WhistlerBlue.xaml" />
-    </UserControl.Resources>
+             Height="500" Width="996">
+    <Page.Resources>
+        <ResourceDictionary Source="Theme/AppTheme.xaml" />
+    </Page.Resources>
+    <Page.Background>
+        <ImageBrush ImageSource="Resources/bg.jpg" AlignmentX="Left" AlignmentY="Top"
+                    Viewport="0,0,1038,500"
+                    ViewportUnits="Absolute" />
+    </Page.Background>
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="190,144,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="457,322,0,0" VerticalAlignment="Top" Width="75"/>
-        <Image HorizontalAlignment="Left" Height="334" Margin="29,10,0,0" VerticalAlignment="Top" Width="156" OpacityMask="Black" Source="pack://siteoforigin:,,,/Resources/ribbonButtonLogo.png"/>
-        <Label Content="Mapping" HorizontalAlignment="Left" Margin="166,10,0,0" VerticalAlignment="Top" Foreground="Red" FontSize="24" Height="42" Width="366" BorderBrush="White" BorderThickness="0,0,0,20"/>
-        <TextBlock HorizontalAlignment="Left" Margin="350,328,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"><Hyperlink>Revert to defaults</Hyperlink></TextBlock>
-        <ComboBox HorizontalAlignment="Left" Margin="208,222,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="319,166,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="346,258,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="228,83,0,0" VerticalAlignment="Top" Width="120"/>
-
+        <Border Background="#E5D6B0A6" BorderBrush="#666A0404" BorderThickness="3,0,0,0" Margin="316,0,0,0">
+            <Grid>
+                <Button Content="Button" HorizontalAlignment="Left" Margin="56,166,0,0" VerticalAlignment="Top" Width="75"/>
+                <TextBlock HorizontalAlignment="Left" Margin="35,331,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"><Hyperlink>Revert to defaults</Hyperlink></TextBlock>
+                <ComboBox HorizontalAlignment="Left" Margin="56,223,0,0" VerticalAlignment="Top" Width="120"/>
+                <ComboBox HorizontalAlignment="Left" Margin="136,166,0,0" VerticalAlignment="Top" Width="120"/>
+                <ComboBox HorizontalAlignment="Left" Margin="56,272,0,0" VerticalAlignment="Top" Width="120"/>
+                <ComboBox HorizontalAlignment="Left" Margin="56,110,0,0" VerticalAlignment="Top" Width="120" BorderBrush="#7F10C5A4"/>
+                <Border Visibility="{Binding ShowIfNoWiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Background="#FFDD2C00" Padding="15" Height="83" VerticalAlignment="Top">
+                    <TextBlock Text="Customise button mapping" TextAlignment="Left"
+                		FontWeight="Light" FontSize="24" VerticalAlignment="Bottom" Foreground="White" Margin="0,0,-5,0" />
+                </Border>
+            </Grid>
+        </Border>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Style="{StaticResource arrowBack}" Margin="10,-12,0,0" />
+        <Ellipse Stroke="#7F10C5A4" StrokeThickness="10" Height="34" VerticalAlignment="Top" HorizontalAlignment="Left" Width="34" RenderTransformOrigin="0.5,0.5" Margin="92,60,0,0">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="86" Y="151"/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse Stroke="#660F42B0" StrokeThickness="10" Height="46" VerticalAlignment="Top" HorizontalAlignment="Left" Width="45" RenderTransformOrigin="0.5,0.5" Margin="87,54,0,0">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="86" Y="151"/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
     </Grid>
-</UserControl>
+</Page>

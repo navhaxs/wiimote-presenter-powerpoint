@@ -18,9 +18,8 @@ namespace WiimoteAddin
     /// <summary>
     /// Interaction logic for MainScreen.xaml
     /// </summary>
-    public partial class MainScreen : UserControl
+    public partial class MainScreen : Page
     {
-        WiimotePairing m = new WiimotePairing();
 
         public MainScreen()
         {
@@ -48,18 +47,23 @@ namespace WiimoteAddin
             }
             else
             {
-                m.startPairWorker(false);
+                //App.PairingWorker.startPairWorker(false);
             }
         }
 
         private void ButtonClearAllWiimotes_Click(object sender, RoutedEventArgs e)
         {
-            m.startUnpairWorker();
+            App.PairingWorker.startUnpairWorker();
         }
 
-        private void Button6_Click(object sender, RoutedEventArgs e)
+        private void PairAnotherWiimote_Click(object sender, RoutedEventArgs e)
         {
-            m.startPairWorker(true);
+            App.PairingWorker.startPairWorker(false);
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            //App.wnd.frame1.Content = new MappingScreen();
         }
 
     }

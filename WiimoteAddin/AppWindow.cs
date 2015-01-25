@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,18 @@ namespace WiimoteAddin
     public partial class AppWindow : Form
     {
 
-        System.Windows.UIElement hostedWPFcontent;
-        public AppWindow(System.Windows.UIElement WPFcontent)
+        public AppWindow()
         {
             InitializeComponent();
-            hostedWPFcontent = WPFcontent;
         }
 
-        private void AppWindow_Load(object sender, EventArgs e)
+        // begin pairing when(ever) the window is shown
+        private void AppWindow_Shown(object sender, EventArgs e)
         {
-            elementHost1.Child = hostedWPFcontent;
-            elementHost1.Visible = true;
+            if (App.NoWiimotesActive())
+            {
+                App.PairingWorker.startPairWorker(true);
+            }
         }
 
         private void AppWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -30,6 +32,12 @@ namespace WiimoteAddin
             // hide window instead of destroying it
             this.Hide();
             e.Cancel = true;
+
+            // TODO: ask pairing to stop
+        }
+
+        private void AppWindow_Load(object sender, EventArgs e)
+        {
         }
     }
 }

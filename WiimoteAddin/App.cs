@@ -7,6 +7,12 @@ namespace WiimoteAddin
 {
     class App
     {
+
+        public static AppWindow wnd;
+
+        public static WiimotePairingWorker PairingWorker = new WiimotePairingWorker();
+
+
         public static WiimoteLib.WiimoteCollection Wiimote_Collection = new WiimoteLib.WiimoteCollection();
         public static int WiimoteCount = 0;
 
