@@ -1,0 +1,97 @@
+﻿<!-- Main screen -->
+<Page x:Class="WiimoteAddin.MainScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    mc:Ignorable="d" 
+    Height="452" Width="773">
+    <Page.Resources>
+        <ResourceDictionary Source="Theme/WhistlerBlue.xaml" />
+    </Page.Resources>
+    <Page.Background>
+        <!-- Don't stretch or fill background image -->
+        <ImageBrush ImageSource="Theme/IMG_4869.jpg"
+                    AlignmentX="Left" AlignmentY="Top"
+                    Viewport="0,0,1038,482"
+                    ViewportUnits="Absolute" />
+    </Page.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="358"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Animation -->
+        <Grid Visibility="{Binding Scene_WiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Height="7" VerticalAlignment="Top" Background="#E500C5FF" Margin="153,336,0,0" HorizontalAlignment="Left" Width="7"/>
+        <Ellipse Visibility="{Binding ShowIfNoWiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Name="RingOuter" Stroke="#740023FF" StrokeThickness="10" Margin="169,303,0,0" HorizontalAlignment="Left" Width="20" Height="20" VerticalAlignment="Top">
+            <Ellipse.Triggers>
+                <!-- Animates the rectangle's opacity. -->
+                <EventTrigger RoutedEvent="Ellipse.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="RingOuter" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.2" To="1.0" Duration="0:0:3" 
+                                    AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+        <Ellipse Visibility="{Binding ShowIfNoWiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Name="RingInner" Stroke="#740023FF" StrokeThickness="10" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="20" RenderTransformOrigin="0.5,0.5" Margin="57,11,0,0">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1" ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="110" Y="261"/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+            <Ellipse.Triggers>
+                <!-- Animates the rectangle's opacity. -->
+                <EventTrigger RoutedEvent="Ellipse.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetName="RingInner" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.2" To="1.0" Duration="0:0:3" 
+                                    AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+        <!-- /Animation -->
+
+        <Border Margin="0,58,0,127" VerticalAlignment="Stretch" Grid.Column="1" Background="#DDFFFFFF" CornerRadius="6" HorizontalAlignment="Left" Width="369">
+            <Grid>
+                <StackPanel>
+                    <TextBlock x:Name="labelCurrentAction1" VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" FontFamily="Segoe UI"
+                               Margin="40,115,40,0" 
+                               Text="{Binding StatusLabel, FallbackValue='Searching for Wiimotes...'}"/>
+                    <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" FontFamily="Segoe UI"
+                               Visibility="{Binding ShowWiimoteHowto, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}">
+                <Run Text="Hold down the 1 and 2 buttons" />
+                    </TextBlock>
+                </StackPanel>
+                <Border Padding="8" Height="62" VerticalAlignment="Top">
+                    <Border.Background>
+                        <ImageBrush ImageSource="Theme/head.png"/>
+                    </Border.Background>
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Left" FontWeight="Light" FontSize="20" VerticalAlignment="Bottom" Foreground="White" FontFamily="Segoe UI Light"
+            		Text="{Binding labelStatus_Text, FallbackValue=Wiimote not connected, UpdateSourceTrigger=PropertyChanged}" />
+                </Border>
+            </Grid>
+        </Border>
+        <Button Content="Configure mapping" Margin="65,356,0,0" x:Name="Button1" VerticalAlignment="Top" FontWeight="Normal" Height="53" FontSize="14" Click="Button1_Click" HorizontalAlignment="Left" Width="154" Grid.Column="1" />
+        <Button Content="Disconnect all Wiimotes" Margin="224,356,0,0" x:Name="ButtonClearAllWiimotes" VerticalAlignment="Top" FontWeight="Normal" Height="53" FontSize="14" Click="ButtonClearAllWiimotes_Click" HorizontalAlignment="Left" Width="169" Grid.Column="1" />
+
+        <TextBlock Visibility="{Binding Scene_WiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Margin="10,290,0,137" HorizontalAlignment="Left" FontSize="13" Width="160" Grid.Column="1"><Hyperlink Click="PairAnotherWiimote_Click" ><Run Text="Connect another Wiimote"/></Hyperlink></TextBlock>
+        <Image HorizontalAlignment="Left" Height="32" Margin="324,74,0,0" VerticalAlignment="Top" Source="{Binding StatusImage, FallbackValue='Theme/StatusAnnotations_Alert_32xLG_color.png', UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+
+    </Grid>
+</Page>

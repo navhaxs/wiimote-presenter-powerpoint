@@ -9,7 +9,7 @@
         <ResourceDictionary Source="Theme/AppTheme.xaml" />
     </Page.Resources>
     <Page.Background>
-        <ImageBrush ImageSource="Resources/bg.jpg" AlignmentX="Left" AlignmentY="Top"
+        <ImageBrush ImageSource="Theme/bg.jpg" AlignmentX="Left" AlignmentY="Top"
                     Viewport="0,0,1038,500"
                     ViewportUnits="Absolute" />
     </Page.Background>

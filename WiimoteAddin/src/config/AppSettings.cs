@@ -8,7 +8,7 @@ namespace WiimoteAddin
 {
     class WiimoteMapping : ApplicationSettingsBase
     {
-        private string displayName;
+        private string displayName;  // TODO button mapping here
         [UserScopedSetting()]
         [SettingsSerializeAs(System.Configuration.SettingsSerializeAs.Xml)]
         public string DisplayName

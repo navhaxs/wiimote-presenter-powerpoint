@@ -13,6 +13,29 @@ namespace WiimoteAddin
 {
     class WiimotePairingWorker
     {
+
+        public int WiimoteCount = 0;
+
+        // helper function
+        public bool NoWiimotesConnected()
+        {
+            if (WiimoteCount == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        internal bool isBusy() {
+            return mutex;
+        }
+
+        internal WiimoteLib.WiimoteCollection wiimoteCollection = new WiimoteLib.WiimoteCollection();
+
         private System.ComponentModel.BackgroundWorker pairWorker = new System.ComponentModel.BackgroundWorker();
         private System.ComponentModel.BackgroundWorker unpairWorker = new System.ComponentModel.BackgroundWorker();
         
@@ -28,6 +51,33 @@ namespace WiimoteAddin
         {
             mutex = false;
             App.MainScreenData.UpdateUI();
+
+            if (e.Result != null)
+            {
+                try {
+                    if ((string) e.Result == "pairerror")
+                    {
+                        MessageBox.Show("There is a Wiimote paired to this computer, but it seems to be disconnected. Please try the \"Disconnect all Wiimotes\" button first.");
+                    }
+                } catch {
+
+                }
+            } else {
+
+                if (App.wiimoteManager.WiimoteCount > 0)
+                {
+
+                    App.restartwiimoteListner();
+                }
+                else
+                {
+                    // pause to show last message
+                    System.Threading.Thread.Sleep(5);
+                    // restart background scanning no more wiimotes connected
+                    startPairWorker(true);
+
+                }
+            }
         }
 
         private void UnpairWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -36,40 +86,39 @@ namespace WiimoteAddin
             App.MainScreenData.UpdateUI();
 
             // pause to show how many were disconnected
-
             System.Threading.Thread.Sleep(5);
 
             // restart background scanning no more wiimotes connected
-
-            if (App.WiimoteCount == 0)
+            if (App.wiimoteManager.WiimoteCount == 0)
             {
                 startPairWorker(true);
             }
         }
 
-        class pairResult
-        {
-            int newWiimotes;
-            bool success;
-
-            pairResultErrorType errorType;
-        }
-        enum pairResultErrorType
-        {
-            FailNoBluetooth,
-            FailUnknown
-        };
 
         bool mutex = false;
 
         public void startPairWorker(bool isContinousScanning)
         {
-            if (!pairWorker.IsBusy && !mutex)
+            if (!pairWorker.IsBusy && !mutex && checkBluetoothOK())
             {
                 mutex = true;
                 pairWorker.WorkerSupportsCancellation = true;
                 pairWorker.RunWorkerAsync(isContinousScanning);
             }
+        }
+
+
+        public bool checkBluetoothOK()
+        {
+            bool result = (BluetoothRadio.PrimaryRadio != null);
+            if (!result)
+            {
+                App.MainScreenData.StatusLabel = "Bluetooth not available";
+                App.MainScreenData.ShowWiimoteHowto = System.Windows.Visibility.Collapsed;
+            }
+
+            return result;
         }
 
         //public void startBackgroundPairWorker()
@@ -95,9 +144,6 @@ namespace WiimoteAddin
 
             }
 
-
-         
-
             if (!unpairWorker.IsBusy && !mutex)
             {
                 mutex = true;
@@ -110,44 +156,21 @@ namespace WiimoteAddin
             bool loopUntilFound = (bool)e.Argument;
 
             App.MainScreenData.StatusLabel = "Scanning for Wiimotes...";
-
+            App.MainScreenData.ShowWiimoteHowto = System.Windows.Visibility.Visible;
 
             // do while
-            if (loopUntilFound)
-            {
-                while (App.WiimoteCount == 0 && !pairWorker.CancellationPending)
-                {
-                    _pair_();
-                }
+            //if (loopUntilFound)
+            //{
+            //    while (App.wiimoteManager.WiimoteCount == 0 && !pairWorker.CancellationPending)
+            //    {
+            //        _pair_(e);
+            //    }
 
-            }
-            else
-            {
-                _pair_();
-
-            }
-
-            
-
-            // Output results
-            if (App.WiimoteCount == 0)
-            {
-                App.MainScreenData.StatusLabel = "No Wiimotes found, try again.";
-            } else if (App.WiimoteCount == 1)
-            {
-                App.MainScreenData.StatusLabel = "Ready to present! Save your work, then start the slideshow";
-            } else if (App.WiimoteCount > 0)
-            {
-                App.MainScreenData.StatusLabel = "Connected " + App.WiimoteCount + " Wiimotes.";
-            }
-    
-        }
-
-        private void _pair_()
-        {
-
+            //}
+            //else
+            //{
             // TODO: Huh isn't this global?
-            App.Wiimote_Collection.Clear();
+            App.wiimoteManager.wiimoteCollection.Clear();
 
             int WiimoteCount_New = new int();
             int WiimoteCount_Existing = new int();
@@ -157,6 +180,7 @@ namespace WiimoteAddin
             if (BluetoothRadio.PrimaryRadio == null)
             {
                 //e.Result = pairResult.FailNoBluetooth;
+
                 return;
             }
             else if (BluetoothRadio.PrimaryRadio.Mode == RadioMode.PowerOff)
@@ -174,11 +198,14 @@ namespace WiimoteAddin
                 // remembered    true   (ie. existing pairings on this bt adapter)
                 // unknown       true
                 //currentRememberedDevice.Refresh(); //?
-                if (isWiimote(currentRememberedDevice))
+                if (matchesWiimoteClass(currentRememberedDevice))
                 {
                     if (currentRememberedDevice.Connected == false)
                     {
-                        doPairWithDevice(currentRememberedDevice);
+                        if (doPairWithDevice(currentRememberedDevice) == false)
+                        {
+                            e.Result = "pairerror";
+                        }
                     }
                 }
             }
@@ -190,17 +217,17 @@ namespace WiimoteAddin
                 // authenticated false
                 // remembered    false   (ie. new devices to this bt adapter)
                 // unknown       true
-                if (isWiimote(currentFoundDevice))
+                if (matchesWiimoteClass(currentFoundDevice))
                 {
                     doPairWithDevice(currentFoundDevice);
                 }
             }
 
-            // Connect to all available Wiimotes
+            // Temporarily connect to all available Wiimotes
             try
             {
-                App.Wiimote_Collection.FindAllWiimotes();
-                foreach (WiimoteLib.Wiimote wm in App.Wiimote_Collection)
+                App.wiimoteManager.wiimoteCollection.FindAllWiimotes();
+                foreach (WiimoteLib.Wiimote wm in App.wiimoteManager.wiimoteCollection)
                 {
                     wm.Connect();
                     wm.SetLEDs(true, true, true, true);
@@ -208,12 +235,8 @@ namespace WiimoteAddin
                     wm.SetRumble(true);
                     System.Threading.Thread.Sleep(200);
                     wm.SetRumble(false);
-                    //wm.Disconnect();
-                    WiimoteCount_Existing = WiimoteCount_Existing + 1;
-
-                    wm.SetReportType(InputReport.Buttons, true);
-                    wm.WiimoteChanged += App.WiimoteController.UpdateWiimoteChanged;
                     wm.Disconnect(); // release hook for now
+                    WiimoteCount_Existing = WiimoteCount_Existing + 1;
                 }
             }
             catch (WiimoteLib.WiimoteNotFoundException)
@@ -226,16 +249,34 @@ namespace WiimoteAddin
                 Debug.Print(exception.Message);
             }
 
-            App.WiimoteCount = WiimoteCount_New + WiimoteCount_Existing;
+            App.wiimoteManager.WiimoteCount = WiimoteCount_New + WiimoteCount_Existing;
+            //}
 
+            App.MainScreenData.ShowWiimoteHowto = System.Windows.Visibility.Hidden;
+
+            // Output results
+            if (App.wiimoteManager.WiimoteCount == 0)
+            {
+                App.MainScreenData.StatusLabel = "No Wiimotes found, try again.";
+            } else if (App.wiimoteManager.WiimoteCount == 1)
+            {
+                App.MainScreenData.StatusLabel = "Ready to present! Please save your work first, then start the slideshow";
+            } else if (App.wiimoteManager.WiimoteCount > 0)
+            {
+                App.MainScreenData.StatusLabel = "Connected " + App.wiimoteManager.WiimoteCount + " Wiimotes.";
+            }
+    
         }
-
+ 
         void unpairWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
 
             App.MainScreenData.StatusLabel = "Disconnecting Wiimotes...";
-            
-            App.Wiimote_Collection.Clear();
+            App.MainScreenData.UpdateUI();
+
+            App.stopwiimoteListner();
+
+            App.wiimoteManager.wiimoteCollection.Clear();
 
             int WiimoteCount_Existing = new int();
             //int WiimoteCount_Connected = new int();
@@ -255,18 +296,16 @@ namespace WiimoteAddin
             // Disconnect Wiimotes
             try
             {
-                App.Wiimote_Collection.FindAllWiimotes();
-                foreach (WiimoteLib.Wiimote wm in App.Wiimote_Collection)
+                App.wiimoteManager.wiimoteCollection.FindAllWiimotes();
+                foreach (WiimoteLib.Wiimote wm in App.wiimoteManager.wiimoteCollection)
                 {
-                    wm.WiimoteChanged -= App.WiimoteController.UpdateWiimoteChanged;
                     wm.SetLEDs(true, false, false, true);
                     wm.Disconnect();
                 }
             }
             catch (WiimoteLib.WiimoteNotFoundException exception)
             {
-                // ignore this case
-                Debug.Print("No Wiimotes available.");
+                Debug.Print("No Wiimotes available. " + exception.Message);
             }
             catch (Exception exception)
             {
@@ -284,7 +323,7 @@ namespace WiimoteAddin
 
                 //BluetoothDeviceInfo newDevices = currentRememberedDevice;
                 currentRememberedDevice.Refresh(); // ??
-                if (isWiimote(currentRememberedDevice))
+                if (matchesWiimoteClass(currentRememberedDevice))
                 {
                     Debug.Print("Device: " + currentRememberedDevice.DeviceName);
                     Debug.Print("   BT address: " + currentRememberedDevice.DeviceAddress);
@@ -299,17 +338,19 @@ namespace WiimoteAddin
 
             App.MainScreenData.StatusLabel = WiimoteCount_Existing + " Wiimotes removed.";
 
+            App.MainScreenData.ShowMessage(WiimoteCount_Existing + " Wiimotes removed.");
+
             // Update counter
-            App.WiimoteCount = 0;
+            App.wiimoteManager.WiimoteCount = 0;
             foreach (BluetoothDeviceInfo currentRememberedDevice in bluetoothClient.DiscoverDevices(255, false, true, true))
             {
                 // max devices   255
                 // authenticated false   Existing pairings with this bt adapter
                 // remembered    true    All authenticated devices are remembered.
                 // unknown       true    Previously unknown devices
-                if (isWiimote(currentRememberedDevice))
+                if (matchesWiimoteClass(currentRememberedDevice))
                 {
-                    App.WiimoteCount++;
+                    App.wiimoteManager.WiimoteCount++;
                 }
             }
 
@@ -356,7 +397,7 @@ namespace WiimoteAddin
 
 
         
-        bool isWiimote(BluetoothDeviceInfo device)
+        bool matchesWiimoteClass(BluetoothDeviceInfo device)
         {
             if ((device.DeviceName == "Nintendo RVL-CNT-01") &&
                     (device.ClassOfDevice.MajorDevice == DeviceClass.Peripheral) &&

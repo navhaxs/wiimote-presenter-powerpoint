@@ -21,9 +21,9 @@ namespace WiimoteAddin
         // begin pairing when(ever) the window is shown
         private void AppWindow_Shown(object sender, EventArgs e)
         {
-            if (App.NoWiimotesActive())
+            if (App.wiimoteManager.NoWiimotesConnected())
             {
-                App.PairingWorker.startPairWorker(true);
+                App.wiimoteManager.startPairWorker(true);
             }
         }
 

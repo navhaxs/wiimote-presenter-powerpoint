@@ -25,23 +25,23 @@ namespace WiimoteAddin
         {
             InitializeComponent();
 
-            if (App.WiimoteCount == 0)
+            if (App.wiimoteManager.WiimoteCount == 0)
             {
                 App.MainScreenData.StatusLabel = "Wiimote not connected";
             }
-            else if (App.WiimoteCount == 1)
+            else if (App.wiimoteManager.WiimoteCount == 1)
             {
                 App.MainScreenData.StatusLabel = "Wiimote connected";
             }
-            else if (App.WiimoteCount > 0)
+            else if (App.wiimoteManager.WiimoteCount > 0)
             {
-                App.MainScreenData.StatusLabel = App.WiimoteCount + " Wiimotes connected";
+                App.MainScreenData.StatusLabel = App.wiimoteManager.WiimoteCount + " Wiimotes connected";
             }
         }
 
         private void ButtonDetectWiimote_Click(object sender, RoutedEventArgs e)
         {
-            if (!App.NoWiimotesActive())
+            if (!App.wiimoteManager.NoWiimotesConnected())
             {
                 Connect.thisPowerPoint.Windows.Application.ActivePresentation.SlideShowSettings.Run();
             }
@@ -53,12 +53,12 @@ namespace WiimoteAddin
 
         private void ButtonClearAllWiimotes_Click(object sender, RoutedEventArgs e)
         {
-            App.PairingWorker.startUnpairWorker();
+            App.wiimoteManager.startUnpairWorker();
         }
 
         private void PairAnotherWiimote_Click(object sender, RoutedEventArgs e)
         {
-            App.PairingWorker.startPairWorker(false);
+            App.wiimoteManager.startPairWorker(false);
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

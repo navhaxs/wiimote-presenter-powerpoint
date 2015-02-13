@@ -8,27 +8,29 @@ namespace WiimoteAddin
     class App
     {
 
-        public static AppWindow wnd;
+        internal static AppWindow ui;                                            
+        internal static WiimotePairingWorker wiimoteManager = new WiimotePairingWorker();
+        private static WiimoteListener wiimoteListner;
 
-        public static WiimotePairingWorker PairingWorker = new WiimotePairingWorker();
-
-
-        public static WiimoteLib.WiimoteCollection Wiimote_Collection = new WiimoteLib.WiimoteCollection();
-        public static int WiimoteCount = 0;
-
-        public static MainScreenViewModel MainScreenData = new MainScreenViewModel();
-
-        public static WiimoteSlideShowController WiimoteController = new WiimoteSlideShowController();
-
-        public static bool NoWiimotesActive()
-        {
-            if (WiimoteCount == 0)
+        // helpers for wiimoteListener
+        internal static void restartwiimoteListner() {
+            if (wiimoteListner != null)
             {
-                return true;
-            } else {
-                return false;
+                wiimoteListner.Dispose();
+            }
+            wiimoteListner = new WiimoteListener();
+        }
+
+        internal static void stopwiimoteListner()
+        {
+            if (wiimoteListner != null)
+            {
+                wiimoteListner.Dispose();
             }
         }
+
+        // ui data
+        internal static MainScreenViewModel MainScreenData = new MainScreenViewModel();
 
     }
 }

@@ -39,7 +39,7 @@
             this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(793, 445);
+            this.elementHost1.Size = new System.Drawing.Size(766, 445);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.frame1;
@@ -50,7 +50,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(793, 445);
+            this.label1.Size = new System.Drawing.Size(766, 445);
             this.label1.TabIndex = 1;
             this.label1.Text = "Loading...";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -59,7 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(793, 445);
+            this.ClientSize = new System.Drawing.Size(766, 445);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

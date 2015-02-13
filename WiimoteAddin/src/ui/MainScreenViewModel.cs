@@ -27,7 +27,7 @@ namespace WiimoteAddin
         {
             get
             {
-                if (App.NoWiimotesActive())
+                if (App.wiimoteManager.NoWiimotesConnected())
                 {
                     return "Wiimote not connected";
                 }
@@ -38,26 +38,40 @@ namespace WiimoteAddin
             }
         }
 
-        public System.Windows.Visibility ShowIfWiimotesActive
+        public System.Windows.Visibility Scene_WiimotesActive
         {
             get
             {
-                if (App.NoWiimotesActive())
+                if (App.wiimoteManager.NoWiimotesConnected() || App.wiimoteManager.isBusy())
                 {
                     return System.Windows.Visibility.Hidden;
                 }
-                else
                 {
                     return System.Windows.Visibility.Visible;
                 }
             }
+        }
+
+        Visibility _ShowWiimoteHowto = Visibility.Visible;
+        public System.Windows.Visibility ShowWiimoteHowto
+        {
+            get
+            {
+                return _ShowWiimoteHowto;
+            }
+            set
+            {
+                _ShowWiimoteHowto = value;
+                OnPropertyChanged("ShowWiimoteHowto");
+            }
+
         }
 
         public System.Windows.Visibility ShowIfNoWiimotesActive
         {
             get
             {
-                if (App.NoWiimotesActive())
+                if (App.wiimoteManager.NoWiimotesConnected())
                 {
                     return System.Windows.Visibility.Visible;
                 }
@@ -68,11 +82,32 @@ namespace WiimoteAddin
             }
         }
 
+        public string StatusImage
+        {
+            get
+            {
+                if (App.wiimoteManager.NoWiimotesConnected()) {
+                    return "Theme/StatusAnnotations_Critical_32xLG_color.png";                   
+                }
+                else
+                {
+                    return "Theme/StatusAnnotations_Complete_and_ok_32xLG_color.png";
+                }
+                
+            }
+        }
+
         public void UpdateUI()
         {
-            OnPropertyChanged("ShowIfWiimotesActive");
+            OnPropertyChanged("Scene_WiimotesActive");
             OnPropertyChanged("ShowIfNoWiimotesActive");
             OnPropertyChanged("labelStatus_Text");
+            OnPropertyChanged("StatusImage");
+        }
+
+        public void ShowMessage(string msg)
+        {
+            MessageBox.Show(msg);
         }
 
         #region "MVVM PropertyChanged code"
