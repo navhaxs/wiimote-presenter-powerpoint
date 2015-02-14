@@ -12,6 +12,7 @@
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\PowerPointApi.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\OfficeApi.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\NetOffice.dll" />
+        <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\VBIDEApi.dll" />
 
         <!--TODO: Check if neccessary -->
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\Microsoft.Expression.Drawing.dll" />

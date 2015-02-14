@@ -39,14 +39,17 @@
     <Reference Include="InTheHand.Net.Personal">
       <HintPath>..\packages\32feet.NET.3.5.0.0\lib\net\InTheHand.Net.Personal.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Drawing" />
-    <Reference Include="NetOffice">
+    <Reference Include="NetOffice, Version=1.7.2.0, Culture=neutral, PublicKeyToken=297f57b43ae7c1de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
       <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\NetOffice.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OfficeApi">
-      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\OfficeApi.dll</HintPath>
+    <Reference Include="OfficeApi, Version=1.7.2.0, Culture=neutral, PublicKeyToken=a39beb0835c43c8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\OfficeApi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PowerPointApi">
       <HintPath>..\packages\NetOffice.PowerPoint.1.7.2.0\lib\net40\PowerPointApi.dll</HintPath>
@@ -61,6 +64,10 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
+    <Reference Include="VBIDEApi">
+      <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\VBIDEApi.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="WiimoteLib">
       <HintPath>..\packages\WiimoteLib.1.7\lib\WiimoteLib.dll</HintPath>
     </Reference>
