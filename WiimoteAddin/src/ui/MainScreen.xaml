@@ -91,7 +91,17 @@
         <Button Content="Disconnect all Wiimotes" Margin="224,356,0,0" x:Name="ButtonClearAllWiimotes" VerticalAlignment="Top" FontWeight="Normal" Height="53" FontSize="14" Click="ButtonClearAllWiimotes_Click" HorizontalAlignment="Left" Width="169" Grid.Column="1" />
 
         <TextBlock Visibility="{Binding Scene_WiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Margin="10,290,0,137" HorizontalAlignment="Left" FontSize="13" Width="160" Grid.Column="1"><Hyperlink Click="PairAnotherWiimote_Click" ><Run Text="Connect another Wiimote"/></Hyperlink></TextBlock>
-        <Image HorizontalAlignment="Left" Height="32" Margin="324,74,0,0" VerticalAlignment="Top" Source="{Binding StatusImage, FallbackValue='Theme/StatusAnnotations_Alert_32xLG_color.png', UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <Image HorizontalAlignment="Left" Height="32" Margin="324,74,0,0" VerticalAlignment="Top" Grid.Column="1">
+            <Image.Source>
+                <Binding Path="StatusImage" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.FallbackValue>
+                        <ImageSource>
+                            Theme/StatusAnnotations_Alert_32xLG_color.png
+                        </ImageSource>
+                    </Binding.FallbackValue>
+                </Binding>
+            </Image.Source>
+        </Image>
 
     </Grid>
 </Page>
