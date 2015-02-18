@@ -116,6 +116,11 @@ namespace WiimoteAddin
             {
                 App.MainScreenData.StatusLabel = "Bluetooth not available";
                 App.MainScreenData.ShowWiimoteHowto = System.Windows.Visibility.Collapsed;
+                App.MainScreenData.Scene_NoBluetooth = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                App.MainScreenData.Scene_NoBluetooth = System.Windows.Visibility.Hidden;
             }
 
             return result;
@@ -144,7 +149,7 @@ namespace WiimoteAddin
 
             }
 
-            if (!unpairWorker.IsBusy && !mutex)
+            if (!unpairWorker.IsBusy && !mutex && checkBluetoothOK())
             {
                 mutex = true;
                 unpairWorker.RunWorkerAsync();

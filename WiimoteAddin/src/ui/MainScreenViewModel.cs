@@ -52,7 +52,21 @@ namespace WiimoteAddin
             }
         }
 
-        Visibility _ShowWiimoteHowto = Visibility.Visible;
+        Visibility _Scene_NoBluetooth = Visibility.Visible;
+        public System.Windows.Visibility Scene_NoBluetooth
+        {
+            get
+            {
+                return _Scene_NoBluetooth;
+            }
+            set
+            {
+                _Scene_NoBluetooth = value;
+                OnPropertyChanged("Scene_NoBluetooth");
+            }
+        }
+
+        Visibility _ShowWiimoteHowto = Visibility.Hidden;
         public System.Windows.Visibility ShowWiimoteHowto
         {
             get
@@ -103,6 +117,7 @@ namespace WiimoteAddin
             OnPropertyChanged("ShowIfNoWiimotesActive");
             OnPropertyChanged("labelStatus_Text");
             OnPropertyChanged("StatusImage");
+            OnPropertyChanged("Scene_NoBluetooth");
         }
 
         public void ShowMessage(string msg)

@@ -90,7 +90,7 @@
         <Button Content="Configure mapping" Margin="65,356,0,0" x:Name="Button1" VerticalAlignment="Top" FontWeight="Normal" Height="53" FontSize="14" Click="Button1_Click" HorizontalAlignment="Left" Width="154" Grid.Column="1" />
         <Button Content="Disconnect all Wiimotes" Margin="224,356,0,0" x:Name="ButtonClearAllWiimotes" VerticalAlignment="Top" FontWeight="Normal" Height="53" FontSize="14" Click="ButtonClearAllWiimotes_Click" HorizontalAlignment="Left" Width="169" Grid.Column="1" />
 
-        <TextBlock Visibility="{Binding Scene_WiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Margin="10,290,0,137" HorizontalAlignment="Left" FontSize="13" Width="160" Grid.Column="1"><Hyperlink Click="PairAnotherWiimote_Click" ><Run Text="Connect another Wiimote"/></Hyperlink></TextBlock>
+        <TextBlock Visibility="{Binding Scene_WiimotesActive, FallbackValue=Visible, UpdateSourceTrigger=PropertyChanged}" Margin="10,290,0,0" HorizontalAlignment="Left" FontSize="13" Width="160" Grid.Column="1" Height="25" VerticalAlignment="Top"><Hyperlink Click="PairAnotherWiimote_Click" ><Run Text="Connect another Wiimote"/></Hyperlink></TextBlock>
         <Image HorizontalAlignment="Left" Height="32" Margin="324,74,0,0" VerticalAlignment="Top" Grid.Column="1">
             <Image.Source>
                 <Binding Path="StatusImage" UpdateSourceTrigger="PropertyChanged">
@@ -102,6 +102,7 @@
                 </Binding>
             </Image.Source>
         </Image>
+        <TextBlock Visibility="{Binding Scene_NoBluetooth, FallbackValue=Hidden, UpdateSourceTrigger=PropertyChanged}" Margin="10,265,0,0" HorizontalAlignment="Left" FontSize="13" Width="160" Grid.Column="1" Height="25" VerticalAlignment="Top"><Hyperlink Click="PairAnotherWiimote_Click" ><Run Text="Try again"/></Hyperlink></TextBlock>
 
     </Grid>
 </Page>

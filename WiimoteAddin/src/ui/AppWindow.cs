@@ -39,5 +39,18 @@ namespace WiimoteAddin
         private void AppWindow_Load(object sender, EventArgs e)
         {
         }
+        
+        // expose SendKeys to slideshow controller
+        public void DoSendKey(string s)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate { DoSendKey(s); }));
+            }
+            else
+            {
+                SendKeys.Send(s);
+            }
+        }
     }
 }
