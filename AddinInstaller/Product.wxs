@@ -7,15 +7,12 @@
         <CreateFolder/>
         <RemoveFolder Id="RemoveAppRootDirectory" On="uninstall" />
         <File Id="fil9vixDJf2hHDP.AuR_bLWKPn72fQ" KeyPath="yes" Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\WiimoteAddin.dll" />
-        <File Source="..\packages\WiimoteLib.1.7\lib\WiimoteLib.dll" /><!--TODO Pack custom WiimoteLib with patches for handling wiimote disconnections -->
+        <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\WiimoteLib.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\InTheHand.Net.Personal.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\PowerPointApi.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\OfficeApi.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\NetOffice.dll" />
         <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\VBIDEApi.dll" />
-
-        <!--TODO: Check if neccessary -->
-        <File Source="..\WiimoteAddin\bin\$(var.WiimoteAddin.Platform)\$(var.WiimoteAddin.Configuration)\Microsoft.Expression.Drawing.dll" />
         
         <!-- TODO: Ensure that these registry keys are deleted (by default in WiX v4) on uninstall! -->
         <RegistryKey Key="Software\Microsoft\Office\PowerPoint\Addins\WiimoteAddin.Connect" Root="HKLM">

@@ -196,13 +196,13 @@ namespace WiimoteAddin
 
             // Check existing wiimote pairings
             bluetoothClient.InquiryLength = new TimeSpan(0, 0, 1); // 1 second scan interval
+            
+                                                                                        // max devices   255
+                                                                                        // authenticated false
+                                                                                        // remembered    true   (ie. existing pairings on this bt adapter)
+                                                                                        // unknown       true
             foreach (BluetoothDeviceInfo currentRememberedDevice in bluetoothClient.DiscoverDevices(255, false, true, true))
             {
-                // max devices   255
-                // authenticated false
-                // remembered    true   (ie. existing pairings on this bt adapter)
-                // unknown       true
-                //currentRememberedDevice.Refresh(); //?
                 if (matchesWiimoteClass(currentRememberedDevice))
                 {
                     if (currentRememberedDevice.Connected == false)
@@ -215,13 +215,13 @@ namespace WiimoteAddin
                 }
             }
 
-            // Scan for unpaired wiimotes in range
+                                                                                        // Scan for unpaired wiimotes in range
+                                                                                        // authenticated false
+                                                                                        // remembered    false   (ie. new devices to this bt adapter)
+                                                                                        // unknown       true
+                                                                                        // max devices   255   
             foreach (BluetoothDeviceInfo currentFoundDevice in bluetoothClient.DiscoverDevices(255, false, false, true))
             {
-                // max devices   255
-                // authenticated false
-                // remembered    false   (ie. new devices to this bt adapter)
-                // unknown       true
                 if (matchesWiimoteClass(currentFoundDevice))
                 {
                     doPairWithDevice(currentFoundDevice);
@@ -237,7 +237,7 @@ namespace WiimoteAddin
                     wm.Connect();
                     wm.SetLEDs(true, true, true, true);
                     System.Threading.Thread.Sleep(200);
-                    wm.SetRumble(true);
+                    wm.SetRumble(true); //bzz!
                     System.Threading.Thread.Sleep(200);
                     wm.SetRumble(false);
                     wm.Disconnect(); // release hook for now
@@ -361,6 +361,8 @@ namespace WiimoteAddin
 
         }
 
+        // todo http://www.richlynch.com/2009/11/18/permanently-pair-wiimotewii-balance-board/
+
         bool doPairWithDevice(BluetoothDeviceInfo currentRememberedDevice)
         {
             try
@@ -389,11 +391,12 @@ namespace WiimoteAddin
                     return true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // Device may be disconnected and out of range // powered off
                 App.MainScreenData.StatusLabel = "out of range // powered off...";
 
+                Debug.Print(ex.Message);
                 // TODO: Unpair
 
                 return false;

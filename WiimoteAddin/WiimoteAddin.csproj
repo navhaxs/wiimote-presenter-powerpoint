@@ -68,14 +68,12 @@
       <HintPath>..\packages\NetOffice.Core.1.7.2.0\lib\net40\VBIDEApi.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="WiimoteLib">
-      <HintPath>..\packages\WiimoteLib.1.7\lib\WiimoteLib.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\config\AppSettings.cs" />
+    <Compile Include="src\pptcontroller\Win32Api.cs" />
     <Compile Include="src\ui\AppWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,7 +183,13 @@
     <Resource Include="src\ui\Theme\StatusAnnotations_Alert_32xLG_color.png" />
     <Resource Include="src\ui\Theme\StatusAnnotations_Warning_32xLG_color.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WiimoteLib_1.7_src\WiimoteCS\WiimoteLib\WiimoteLib.csproj">
+      <Project>{37a555df-7012-4b99-8a47-1c922a361e52}</Project>
+      <Name>WiimoteLib</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

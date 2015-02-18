@@ -26,7 +26,9 @@ namespace WiimoteAddin
                     
                         wm.SetReportType(InputReport.Buttons, true);
 
-                        if (i == 0)
+                        wm.WiimoteDisconnect += wm_WiimoteDisconnect;
+
+                        if (i == 0) // recieve events only from the first wiimote
                         {
                             Debug.Print("Added WiimoteChanged event to Wiimote 1.");
                             wm.WiimoteChanged += UpdateWiimoteChanged;
@@ -50,6 +52,12 @@ namespace WiimoteAddin
 
         }
 
+        void wm_WiimoteDisconnect(object sender, EventArgs e)
+        {
+            // todo
+
+        }
+
         private void UpdateWiimoteChanged(object sender, WiimoteChangedEventArgs e)
         {
             state.Update(e.WiimoteState);
@@ -59,13 +67,82 @@ namespace WiimoteAddin
         {
             if (e.buttonDown)
             {
-                if (e.button == Button.Right || e.button == Button.Down || e.button == Button.A)
+                if (WiimoteAddin.Win32Api.isPowerPointSlideShowActive())
                 {
-                    pptController.NextSlide();
-                }
-                if (e.button == Button.Left || e.button == Button.Up || e.button == Button.B)
-                {
-                    pptController.PrevSlide();
+                    if (e.button == Button.Up)
+                    {
+                        App.ui.DoSendKey("{UP}");
+                    }
+                    if (e.button == Button.Down)
+                    {
+                        App.ui.DoSendKey("{DOWN}");
+                    }
+                    if (e.button == Button.Left)
+                    {
+                        App.ui.DoSendKey("{LEFT}");
+                    }
+                    if (e.button == Button.Right)
+                    {
+                        App.ui.DoSendKey("{RIGHT}");
+                    }
+                    if (e.button == Button.A)
+                    {
+                        App.ui.DoSendKey("{ENTER}");
+                    }
+                    if (e.button == Button.B)
+                    {
+                        App.ui.DoSendKey("{BKSP}");
+                    }
+                    if (e.button == Button.One)
+                    {
+                        pptController.blankBlack();
+                    }
+                    if (e.button == Button.Two)
+                    {
+                        pptController.blankWhite();
+                    }
+                    if (e.button == Button.Plus)
+                    {
+                        pptController.zoomIn();
+                    }
+                    if (e.button == Button.Minus)
+                    {
+                        pptController.zoomOut();
+                    }
+                    if (e.button == Button.Home)
+                    {
+                        App.ui.DoSendKey("{ESC}");
+                    }
+                } else {
+
+                    if (e.button == Button.Right || e.button == Button.Down || e.button == Button.A)
+                    {
+                        pptController.NextSlide();
+                    }
+                    if (e.button == Button.Left || e.button == Button.Up || e.button == Button.B)
+                    {
+                        pptController.PrevSlide();
+                    }
+                    if (e.button == Button.One)
+                    {
+                        pptController.blankBlack();
+                    }
+                    if (e.button == Button.Two)
+                    {
+                        pptController.blankWhite();
+                    }
+                    if (e.button == Button.Plus)
+                    {
+                        pptController.zoomIn();
+                    }
+                    if (e.button == Button.Minus)
+                    {
+                        pptController.zoomOut();
+                    }
+                    if (e.button == Button.Home)
+                    {
+                        pptController.slideshowStart();
+                    }
                 }
             }
             

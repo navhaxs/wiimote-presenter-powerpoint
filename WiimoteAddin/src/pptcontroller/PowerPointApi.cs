@@ -1,22 +1,19 @@
-﻿using NetOffice;
+﻿using System;
 
+using NetOffice;
 using Office = NetOffice.OfficeApi;
 using NetOffice.OfficeApi.Enums;
 using PPt = NetOffice.PowerPointApi;
 using NetOffice.PowerPointApi.Enums;
 
-
 namespace WiimoteAddin
 {
     public class PowerPointApi
-    {
-        // Instead of using sendkeys (previous method in old WiimoteAddin versions),
-        // use the COM api...
-        // Unfortunately there are many cases to test for... lots of COMExceptions at runtime!
-        
-        // MSDN references: https://code.msdn.microsoft.com/office/How-to-Automate-control-8c8319b2
+    {       
+        // References: https://code.msdn.microsoft.com/office/How-to-Automate-control-8c8319b2
         // and the MSDN sample 'VBAutomationControlPPT'
-        // Adapted to NetOffice in an attempt to increase interoperability between different PowerPoint versions
+
+        // adapted to NetOffice
         
         // Define PowerPoint Application object
         PPt.Application pptApplication = WiimoteAddin.Connect.thisPowerPoint;
@@ -35,39 +32,54 @@ namespace WiimoteAddin
         {
             pptApplication = thisPPtInstance;
         }
+       
+        private void getPPtData()
+        {
 
-        private void getPPtData() {
-            
-            if (pptApplication != null)
+            try
             {
-                // Get Presentation Object
-                presentation = pptApplication.ActivePresentation;
-                // Get Slide collection object
-                slides = presentation.Slides;
-                // Get Slide count
-                slidescount = slides.Count;
-                // Get current selected slide 
-                try
+                if (pptApplication != null)
                 {
-                    // Get selected slide object in normal view
-                    slide = slides[pptApplication.ActiveWindow.Selection.SlideRange.SlideNumber];
-                }
-                catch
-                {
-                    // Get selected slide object in reading view
-                    slide = pptApplication.SlideShowWindows[1].View.Slide;
+                    // Get Presentation Object
+                    presentation = pptApplication.ActivePresentation;
+                    // Get Slide collection object
+                    slides = presentation.Slides;
+                    // Get Slide count
+                    slidescount = slides.Count;
+
+                   
+                    // Get current selected slide 
+                    try
+                    {
+                        // Get selected slide object in normal view
+                        slide = slides[pptApplication.ActiveWindow.Selection.SlideRange.SlideNumber];
+                    }
+                    catch
+                    {
+                        // Get selected slide object in reading view
+                        slide = pptApplication.SlideShowWindows[1].View.Slide;
+
+                    }
                 }
             }
+            catch
+            {
 
+                // if pptApplication.SlideShowWindows[1].View.Slide is invalid,
+                // e.g. the 'Press any key to exit slideshow' screen
+                // ignore.
+
+            }
         }
 
         public void NextSlide() {
-            System.Diagnostics.Debug.Print("NextSlide called.");
             getPPtData();
             slideIndex = slide.SlideIndex + 1;
             if (slideIndex > slidescount)
             {
                 //MessageBox.Show("It is already last page")
+
+                // rumble wiimote
             }
             else
             {
@@ -79,6 +91,7 @@ namespace WiimoteAddin
                 }
                 catch
                 {
+
                     pptApplication.SlideShowWindows[1].View.Next();
                     slide = pptApplication.SlideShowWindows[1].View.Slide;
                 }
@@ -146,19 +159,49 @@ namespace WiimoteAddin
 
         public void blankWhite()
         {
-            getPPtData();
+            try
+            {
+                if (WiimoteAddin.Win32Api.isPowerPointSlideShowActive())
+                {
+                    App.ui.DoSendKey("w"); // Dirty hack due to lack of API function:(
+                }
+            }
+            catch
+            {
 
-            //todo
+            }
         }
 
         public void blankBlack()
         {
-            getPPtData();
+            try
+            {
+                if (WiimoteAddin.Win32Api.isPowerPointSlideShowActive())
+                {
+                    App.ui.DoSendKey("b"); // Dirty hack due to lack of API function:(
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         public void slideshowStart()
         {
             getPPtData();
+            try
+            {
+
+                if (pptApplication.SlideShowWindows.Count == 0)
+                {
+                    pptApplication.ActivePresentation.SlideShowSettings.Run();
+                }
+
+            }
+            catch
+            {
+            }
         }
 
         public void slideshowStop()
@@ -170,5 +213,39 @@ namespace WiimoteAddin
         {
             getPPtData();
         }
+
+
+
+        internal void zoomIn()
+        {
+            try
+            {
+                if (WiimoteAddin.Win32Api.isPowerPointSlideShowActive())
+                {
+                    App.ui.DoSendKey("{+}"); // Dirty hack due to lack of API function:(
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+
+        internal void zoomOut()
+        {
+            try
+            {
+                if (WiimoteAddin.Win32Api.isPowerPointSlideShowActive())
+                {
+                    App.ui.DoSendKey("-"); // Dirty hack due to lack of API function:(
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
     }
 }
